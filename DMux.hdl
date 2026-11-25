@@ -1,0 +1,16 @@
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    // Invert sel
+    Nand(a=sel, b=sel, out=notSel);
+
+    // Channel A: in AND notSel
+    Nand(a=in, b=notSel, out=nandA);
+    Nand(a=nandA, b=nandA, out=a);
+
+    // Channel B: in AND sel
+    Nand(a=in, b=sel, out=nandB);
+    Nand(a=nandB, b=nandB, out=b);
+}

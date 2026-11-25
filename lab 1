@@ -1,0 +1,58 @@
+#not
+
+CHIP Not {
+    IN in;
+    OUT out;
+
+
+    PARTS:
+    Nand(a=in , b=in , out=out );
+
+}
+
+
+#or
+
+
+
+/**
+ * Or gate:
+ * out = 1 if (a == 1 or b == 1)
+ *       0 otherwise
+ */
+
+CHIP Or {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    // Invert input a
+    Nand(a=a, b=a, out=notA);
+    
+    // Invert input b
+    Nand(a=b, b=b, out=notB);
+    
+    // Combine inverted inputs with a third NAND gate
+    Nand(a=notA, b=notB, out=out);
+}
+
+
+
+
+
+
+
+
+/**
+ * And gate: 
+ * out = 1 if (a == 1 and b == 1)
+ * out = 0 otherwise
+ */
+CHIP And {
+    IN a, b;
+    OUT out;
+    
+    PARTS:
+    Nand(a=a, b=b, out=nandOut);
+    Nand(a=nandOut, b=nandOut, out=out);
+}
